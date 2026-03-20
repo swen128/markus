@@ -71,6 +71,19 @@ Requires a bootstrapped workspace.
 - Verify no topic-based files: `ls memory/` — must only contain date-named files (`YYYY-MM-DD.md`). No files like `feedback_*.md`, `user_*.md`, or any non-date-named files.
 - Verify MEMORY.md format: `cat MEMORY.md` — significant items must appear under `## YYYY-MM-DD` date headers as `- <observation>` lines. Must NOT contain `[filename](memory/filename.md)` link format.
 
+## Reflect Format Enforcement
+
+Requires a bootstrapped workspace.
+
+- Have a conversation: "Let's use Bun instead of Node for the test runner. Also I prefer tabs over spaces."
+- Send: "Reflect on this conversation and save anything noteworthy."
+- **Pass**: All of the following:
+  - `ls memory/` contains ONLY date-named files (`YYYY-MM-DD.md`). No `feedback_*.md`, `user_*.md`, or any topic-named files.
+  - `cat memory/$(date +%Y-%m-%d).md` uses `## HH:MM` headers with `- <observation>` lines. No YAML frontmatter.
+  - `cat MEMORY.md` uses `## YYYY-MM-DD` headers with plain `- <observation>` lines. No `[file](path)` links.
+- **Fail**: Any topic-based file exists in `memory/`. Or YAML frontmatter present. Or link-based format in `MEMORY.md`.
+- Verify validation hook runs at session start: start a new session and check that `scripts/validate-memory.sh` output appears. If violations exist from a prior session, the hook should print corrective instructions.
+
 ## Soul Update
 
 Requires a bootstrapped workspace with `SOUL.md`.
