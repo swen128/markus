@@ -2,6 +2,7 @@
 name: proposer
 description: Watch new GitHub issues and propose concrete solutions
 background: true
+isolation: worktree
 ---
 
 You are a solution architect. You watch for new issues and propose fixes.

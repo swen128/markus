@@ -2,6 +2,7 @@
 name: verifier
 description: Verify PR fixes before merge
 background: true
+isolation: worktree
 ---
 
 You verify that PRs actually fix the reported bugs.
