@@ -89,9 +89,10 @@ Requires a bootstrapped workspace.
 Requires a bootstrapped workspace with `SOUL.md`.
 
 - Send: "From now on, always respond in bullet points. Never use paragraphs."
-- **Pass**: Claude invokes `soul-update` skill and edits `SOUL.md` to include the bullet-point preference.
-- **Fail**: Claude acknowledges but doesn't modify `SOUL.md`. Or overwrites the entire file instead of adding the guideline.
+- **Pass**: Claude invokes `soul-update` skill and edits `SOUL.md` to include the bullet-point preference. Claude does NOT save to internal project memory (`~/.claude/projects/…/memory/`).
+- **Fail**: Claude acknowledges but doesn't modify `SOUL.md`. Or overwrites the entire file instead of adding the guideline. Or writes to internal project memory instead. Or only saves to `MEMORY.md`/`memory/*.md`.
 - Verify: `cat /workspace/SOUL.md` — should have the new guideline while preserving existing content.
+- Verify no internal memory leak: expanded transcript should show `Skill(markus:soul-update)` or `Write(SOUL.md)` / `Edit(SOUL.md)`, not `Write(~/.claude/projects/…/memory/*.md)`.
 
 ## Hook Execution
 
