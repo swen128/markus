@@ -25,7 +25,4 @@ jobs:
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           claude_args: "--agent proposer --dangerously-skip-permissions"
-          prompt: |
-            Propose solutions for issue #${{ github.event.issue.number }}.
-            Read .claude/agents/proposer.md for your instructions.
-            Read docs/values.md for principles.
+          prompt: "Propose solutions for issue #${{ github.event.issue.number }}"
