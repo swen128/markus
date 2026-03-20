@@ -1,0 +1,37 @@
+{
+  "name": "markus",
+  "version": "0.1.0",
+  "private": true,
+  "main": "src/server.ts",
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "knip": "knip",
+    "test": "bun test",
+    "check": "bun format && bun typecheck && bun lint && bun knip && bun test",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "croner": "^9.0.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.3.14",
+    "@eslint/js": "^10.0.1",
+    "@types/bun": "^1.1.16",
+    "@types/node": "^22.10.2",
+    "@typescript-eslint/eslint-plugin": "^8.55.0",
+    "@typescript-eslint/parser": "^8.55.0",
+    "eslint": "^9.32.0",
+    "eslint-plugin-eslint-comments": "^3.2.0",
+    "eslint-plugin-functional": "^9.0.2",
+    "eslint-plugin-unicorn": "^63.0.0",
+    "husky": "^9.1.7",
+    "knip": "^5.83.1",
+    "typescript": "^5.9.3"
+  }
+}

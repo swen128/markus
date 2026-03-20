@@ -1,0 +1,9 @@
+{
+  "name": "markus",
+  "description": "Persistent memory and scheduled autonomous tasks for Claude Code — memory files, cron scheduling, and workspace personality via MCP channels",
+  "version": "0.1.0",
+  "author": {
+    "name": "swen128"
+  },
+  "keywords": ["memory", "cron", "channel", "personality", "workspace"]
+}

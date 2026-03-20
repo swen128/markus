@@ -1,0 +1,22 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "diff -q \"${CLAUDE_PLUGIN_ROOT}/package.json\" \"${CLAUDE_PLUGIN_DATA}/package.json\" >/dev/null 2>&1 || (cp \"${CLAUDE_PLUGIN_ROOT}/package.json\" \"${CLAUDE_PLUGIN_ROOT}/bun.lock\" \"${CLAUDE_PLUGIN_DATA}/\" && cd \"${CLAUDE_PLUGIN_DATA}\" && bun install --frozen-lockfile 2>/dev/null || (rm -f \"${CLAUDE_PLUGIN_DATA}/package.json\" && false))"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "for f in SOUL.md IDENTITY.md USER.md AGENTS.md TOOLS.md; do [ -f \"$f\" ] && echo \"--- $f ---\" && cat \"$f\" && echo; done; [ ! -f SOUL.md ] && echo '--- BOOTSTRAP ---' && echo 'SOUL.md not found. Run the markus:bootstrap skill to set up this workspace.'"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "$schema": "https://unpkg.com/knip@latest/schema.json",
+  "ignoreExportsUsedInFile": true,
+  "entry": ["src/server.ts"],
+  "project": ["src/**/*.ts"],
+  "eslint": {
+    "config": ["eslint.config.js"]
+  },
+  "typescript": {
+    "config": ["tsconfig.json"]
+  }
+}
