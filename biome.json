@@ -34,7 +34,7 @@
     }
   },
   "files": {
-    "includes": ["**/*.{ts,tsx,js,jsx,json,jsonc}", "!!**/.claude/worktrees/**"],
+    "includes": ["**/*.{ts,tsx,js,jsx,json,jsonc}", "!**/.claude/worktrees/**"],
     "ignoreUnknown": false
   }
 }

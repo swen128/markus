@@ -104,6 +104,6 @@ export default [
     },
   },
   {
-    ignores: ["node_modules/", "*.config.js"],
+    ignores: ["node_modules/", "*.config.js", ".claude/worktrees/"],
   },
 ];
