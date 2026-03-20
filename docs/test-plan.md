@@ -94,3 +94,4 @@ Requires a bootstrapped workspace with `SOUL.md`.
 - **Pass**: The qmd MCP server connects. The qmd SessionStart hook creates collections. `qmd search "some query"` returns results.
 - **Fail**: qmd server fails to start (missing binary, network blocked for `bunx`). Or collections aren't created. Or search returns nothing despite matching content.
 - Verify: Debug log shows qmd MCP connected. `qmd collection list` shows `memory-root` and `memory-dir`.
+- Verify: `bunx @tobilu/qmd --version` succeeds without network access. Check `iptables -L -n` confirms firewall is active.
