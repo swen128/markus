@@ -1,0 +1,31 @@
+name: Implement Decided Issue
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  implement:
+    if: github.event.sender.login == github.repository_owner && github.event.label.name == 'status:decided'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Implement fix
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          claude_args: "--agent implementer"
+          prompt: |
+            Implement the fix for issue #${{ github.event.issue.number }}.
+            Read .claude/agents/implementer.md for your instructions.
+            Read docs/values.md for principles.
