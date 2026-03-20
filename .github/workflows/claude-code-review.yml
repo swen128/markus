@@ -12,7 +12,7 @@ on:
 
 jobs:
   claude-review:
-    if: github.event.pull_request.user.login == github.repository_owner || github.event.pull_request.user.login == 'app/claude'
+    if: github.event.pull_request.user.login == github.repository_owner || github.event.pull_request.user.login == 'claude[bot]'
     runs-on: ubuntu-latest
     permissions:
       contents: read
