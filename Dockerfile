@@ -22,6 +22,13 @@ ENV PATH="/usr/local/share/bun/bin:$PATH"
 
 RUN npm install -g @anthropic-ai/claude-code@latest
 RUN bun add -g @tobilu/qmd
+RUN mkdir -p /tmp/qmd-warmup && \
+    echo "warmup" > /tmp/qmd-warmup/doc.md && \
+    qmd collection add /tmp/qmd-warmup --name warmup --mask doc.md && \
+    qmd update && \
+    qmd embed && \
+    qmd collection remove warmup && \
+    rm -rf /tmp/qmd-warmup
 
 COPY scripts/init-firewall.sh /usr/local/bin/init-firewall.sh
 RUN chmod +x /usr/local/bin/init-firewall.sh && \

@@ -37,7 +37,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "if command -v qmd >/dev/null 2>&1; then qmd collection list 2>/dev/null | grep -q memory-root || ([ -f MEMORY.md ] && qmd collection add . --name memory-root --mask MEMORY.md 2>/dev/null); qmd collection list 2>/dev/null | grep -q memory-dir || ([ -d memory ] && qmd collection add memory --name memory-dir --mask '**/*.md' 2>/dev/null); qmd update 2>/dev/null; fi"
+            "command": "if command -v qmd >/dev/null 2>&1; then qmd collection list 2>/dev/null | grep -q memory-root || ([ -f MEMORY.md ] && qmd collection add . --name memory-root --mask MEMORY.md 2>/dev/null); qmd collection list 2>/dev/null | grep -q memory-dir || ([ -d memory ] && qmd collection add memory --name memory-dir --mask '**/*.md' 2>/dev/null); qmd update 2>/dev/null; qmd embed 2>/dev/null; fi"
           }
         ]
       }
