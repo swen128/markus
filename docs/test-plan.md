@@ -3,8 +3,8 @@
 Fresh workspace with no `SOUL.md`.
 
 - Send: "Hello"
-- **Pass**: Claude invokes the `bootstrap` skill, copies templates (`SOUL.md`, `IDENTITY.md`, `USER.md`, `TOOLS.md`, `BOOTSTRAP.md`) into `/workspace`, creates `memory/` dir, starts the onboarding conversation, and eventually deletes `BOOTSTRAP.md`.
-- **Fail**: Claude responds normally without bootstrapping. Or templates aren't copied. Or `BOOTSTRAP.md` remains after onboarding.
+- **Pass**: Claude invokes the `bootstrap` skill immediately (before or instead of responding to "Hello"), copies templates (`SOUL.md`, `IDENTITY.md`, `USER.md`, `TOOLS.md`, `BOOTSTRAP.md`) into `/workspace`, creates `memory/` dir, starts the onboarding conversation, and eventually deletes `BOOTSTRAP.md`.
+- **Fail**: Claude responds to "Hello" normally without bootstrapping. Or Claude acknowledges the nudge but waits for explicit user instruction to bootstrap.
 - Verify files: `ls /workspace/SOUL.md /workspace/IDENTITY.md /workspace/USER.md /workspace/TOOLS.md /workspace/memory/`
 - Verify MEMORY.md location: `test -f /workspace/MEMORY.md && echo PASS || echo FAIL` — must be at workspace root, not inside `memory/`.
 
