@@ -1,10 +1,8 @@
 # Markus
 
-Claude Code plugin for personal assistant.
+Claude Code plugin for personal assistant. When installed by an end user, Markus gives their Claude agent persistent memory, personality, and scheduled tasks.
 
-- Persistent memory: the agent can have personality and save memories
-- Cron jobs: the agent can be nudged to do something at specified schedule
-- Message-driven: with certain MCP servers provided outside this repo, the agent can react to Telegram, Discord message or anything via the channel notifications
+This repo is the plugin source code. `docs/` governs how we develop the plugin. `skills/`, `templates/`, and `src/` are plugin code that runs in the end user's environment — Markus creates and manages memory files (`SOUL.md`, `MEMORY.md`, etc.) in their workspace.
 
 ## Testing
 
