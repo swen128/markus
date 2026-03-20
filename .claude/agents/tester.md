@@ -34,7 +34,7 @@ tmux new-session -d -s "$SESSION" "docker run --rm -it --name $CONTAINER --cap-a
 
 Use `tmux send-keys -t "$SESSION"` to interact and `tmux capture-pane -t "$SESSION" -p` to read output.
 
-After sending input, use the wait script instead of blind sleeping:
+After sending input, wait for the Stop hook sentinel instead of blind sleeping:
 
 ```bash
 tmux send-keys -t "$SESSION" "Hello" Enter

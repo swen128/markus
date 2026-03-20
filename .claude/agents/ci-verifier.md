@@ -14,7 +14,12 @@ You verify that PRs actually fix the reported bugs.
   tmux new-session -d -s test "claude --dangerously-skip-permissions --plugin-dir . --dangerously-load-development-channels plugin:markus@inline"
   ```
 
-- Interact using `tmux send-keys -t test` and observe with `tmux capture-pane -t test -p`
+- Interact using `tmux send-keys` and wait for the Stop hook sentinel instead of sleeping:
+  ```bash
+  tmux send-keys -t test "Hello" Enter
+  bash scripts/wait-for-response.sh /tmp/claude-stop-sentinel 120
+  tmux capture-pane -t test -p
+  ```
 
 - Run the reproduction steps from the linked issue
 

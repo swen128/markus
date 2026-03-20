@@ -48,4 +48,4 @@ RUN mkdir -p /tmp/qmd-warmup && \
 VOLUME /home/node/.claude
 VOLUME /workspace
 
-ENTRYPOINT ["bash", "/plugin/scripts/docker-entrypoint.sh"]
+ENTRYPOINT ["sh", "-c", "sudo init-firewall.sh && exec claude --dangerously-skip-permissions --plugin-dir /plugin --dangerously-load-development-channels plugin:markus@inline"]
