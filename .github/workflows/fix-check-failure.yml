@@ -29,4 +29,9 @@ jobs:
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           claude_args: "--agent implementer --dangerously-skip-permissions"
-          prompt: "The CI check failed on branch ${{ github.event.check_suite.head_branch }}. Investigate the failure and commit a fix."
+          prompt: |
+            The CI check failed.
+            Branch: ${{ github.event.check_suite.head_branch }}
+            Commit: ${{ github.event.check_suite.head_sha }}
+            Run `gh run list --commit ${{ github.event.check_suite.head_sha }} --status failure --json databaseId --jq '.[0].databaseId'` to get the failed run ID, then `gh run view <id> --log-failed` to get the failure logs.
+            Investigate and commit a fix.
