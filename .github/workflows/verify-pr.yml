@@ -1,34 +1,35 @@
-name: Claude Code Review
+name: Verify PR
 
 on:
   pull_request:
     types: [opened, synchronize, ready_for_review, reopened]
 
 concurrency:
-  group: claude-review-${{ github.event.pull_request.head.sha }}
+  group: verify-pr-${{ github.event.pull_request.head.sha }}
 
 jobs:
-  review:
+  verify:
     if: github.event.pull_request.user.login == github.repository_owner || github.event.pull_request.user.login == 'claude[bot]'
     runs-on: ubuntu-latest
     permissions:
       contents: read
       pull-requests: write
-      issues: read
+      issues: write
       id-token: write
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 1
+          fetch-depth: 0
 
-      - name: Run Claude Code Review
+      - uses: oven-sh/setup-bun@v2
+      - run: sudo apt-get install -y tmux
+      - run: bun install --frozen-lockfile
+
+      - name: Verify PR
         uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-          plugin_marketplaces: 'https://github.com/anthropics/claude-code.git'
-          plugins: 'code-review@claude-code-plugins'
-          prompt: '/code-review:code-review ${{ github.repository }}/pull/${{ github.event.pull_request.number }}'
-          allowed_bots: 'claude'
-          show_full_output: true
+          claude_args: "--agent ci-verifier --dangerously-skip-permissions"
+          prompt: "Verify PR #${{ github.event.pull_request.number }}"
