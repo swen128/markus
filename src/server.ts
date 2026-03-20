@@ -114,6 +114,10 @@ const main = async () => {
     () => false,
   );
   if (!soulExists) {
+    // Delay to let the client register its channel notification handler.
+    // The MCP SDK silently drops notifications sent before the handler is ready (~31ms after connect).
+    const delay = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
+    await delay(500);
     await mcp.server.notification({
       method: "notifications/claude/channel",
       params: {
