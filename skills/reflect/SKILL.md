@@ -12,7 +12,7 @@ description: Extract noteworthy items from the current conversation into memory 
 
    - <observation or decision>
    ```
-5. If any item warrants long-term retention, also append to `MEMORY.md`:
+5. If any item warrants long-term retention, also append to `MEMORY.md` **in the workspace root** (not inside `memory/`):
    ```
    ## YYYY-MM-DD
 

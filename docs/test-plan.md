@@ -6,6 +6,7 @@ Fresh workspace with no `SOUL.md`.
 - **Pass**: Claude invokes the `bootstrap` skill, copies templates (`SOUL.md`, `IDENTITY.md`, `USER.md`, `TOOLS.md`, `BOOTSTRAP.md`) into `/workspace`, creates `memory/` dir, starts the onboarding conversation, and eventually deletes `BOOTSTRAP.md`.
 - **Fail**: Claude responds normally without bootstrapping. Or templates aren't copied. Or `BOOTSTRAP.md` remains after onboarding.
 - Verify files: `ls /workspace/SOUL.md /workspace/IDENTITY.md /workspace/USER.md /workspace/TOOLS.md /workspace/memory/`
+- Verify MEMORY.md location: `test -f /workspace/MEMORY.md && echo PASS || echo FAIL` — must be at workspace root, not inside `memory/`.
 
 ## User Update
 
@@ -65,6 +66,7 @@ Requires a bootstrapped workspace.
 - **Pass**: Claude invokes `reflect` skill, creates/appends to `memory/YYYY-MM-DD.md` with the decisions. Significant items also go to `MEMORY.md`.
 - **Fail**: Claude says "okay" but doesn't write anything. Or writes to wrong files. Or duplicates existing entries.
 - Verify: `cat memory/$(date +%Y-%m-%d).md` and `cat MEMORY.md`.
+- Verify MEMORY.md is at workspace root: `test -f /workspace/MEMORY.md && echo PASS || echo FAIL` — should NOT be at `/workspace/memory/MEMORY.md`.
 
 ## Soul Update
 
