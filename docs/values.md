@@ -17,3 +17,7 @@ Every claim in a bug report or investigation must be backed by evidence. If it c
 ## No workarounds
 
 Fix root causes. Don't patch symptoms, bypass lint, loosen types, or add special cases for tests.
+
+## No outsider-triggered AI agent in CI
+
+Every GitHub workflow that invokes an AI agent must gate on `github.event.sender.login == github.repository_owner` or equivalent. Outsiders must never be able to trigger AI agent execution via issues, PRs, comments, or any other event.
