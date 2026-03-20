@@ -21,6 +21,8 @@ RUN mv /root/.bun /usr/local/share/bun
 ENV PATH="/usr/local/share/bun/bin:$PATH"
 
 RUN npm install -g @anthropic-ai/claude-code@latest
+ENV BUN_INSTALL="/usr/local/share/bun"
+RUN bun add -g @tobilu/qmd
 
 COPY scripts/init-firewall.sh /usr/local/bin/init-firewall.sh
 RUN chmod +x /usr/local/bin/init-firewall.sh && \
