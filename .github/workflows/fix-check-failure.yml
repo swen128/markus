@@ -1,0 +1,37 @@
+name: Fix Check Failure
+
+on:
+  check_suite:
+    types: [completed]
+
+jobs:
+  fix:
+    if: github.event.check_suite.conclusion == 'failure' && github.event.sender.login == github.repository_owner
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.check_suite.head_branch }}
+          fetch-depth: 0
+
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+
+      - name: Fix check failure
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          claude_args: "--agent implementer --dangerously-skip-permissions"
+          prompt: |
+            The CI check failed.
+            Branch: ${{ github.event.check_suite.head_branch }}
+            Commit: ${{ github.event.check_suite.head_sha }}
+            Run `gh run list --commit ${{ github.event.check_suite.head_sha }} --status failure --json databaseId --jq '.[0].databaseId'` to get the failed run ID, then `gh run view <id> --log-failed` to get the failure logs.
+            Investigate and commit a fix.

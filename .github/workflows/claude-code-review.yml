@@ -3,15 +3,9 @@ name: Claude Code Review
 on:
   pull_request:
     types: [opened, synchronize, ready_for_review, reopened]
-    # Optional: Only run on specific file changes
-    # paths:
-    #   - "src/**/*.ts"
-    #   - "src/**/*.tsx"
-    #   - "src/**/*.js"
-    #   - "src/**/*.jsx"
 
 jobs:
-  claude-review:
+  review:
     if: github.event.pull_request.user.login == github.repository_owner || github.event.pull_request.user.login == 'claude[bot]'
     runs-on: ubuntu-latest
     permissions:
@@ -21,13 +15,22 @@ jobs:
       id-token: write
 
     steps:
+      - name: Skip if already reviewed this SHA
+        run: |
+          existing=$(gh api "repos/${{ github.repository }}/actions/workflows/claude-code-review.yml/runs?head_sha=${{ github.event.pull_request.head.sha }}&status=success" --jq '.workflow_runs[0].id')
+          if [[ -n "$existing" && "$existing" != "null" ]]; then
+            echo "Already reviewed in run $existing"
+            exit 78
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
       - name: Run Claude Code Review
-        id: claude-review
         uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
@@ -35,4 +38,4 @@ jobs:
           plugins: 'code-review@claude-code-plugins'
           prompt: '/code-review:code-review ${{ github.repository }}/pull/${{ github.event.pull_request.number }}'
           allowed_bots: 'claude'
-
+          show_full_output: true

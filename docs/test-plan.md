@@ -67,6 +67,9 @@ Requires a bootstrapped workspace.
 - **Fail**: Claude says "okay" but doesn't write anything. Or writes to wrong files. Or duplicates existing entries.
 - Verify: `cat memory/$(date +%Y-%m-%d).md` and `cat MEMORY.md`.
 - Verify MEMORY.md is at workspace root: `test -f /workspace/MEMORY.md && echo PASS || echo FAIL` — should NOT be at `/workspace/memory/MEMORY.md`.
+- Verify daily log format: `cat memory/$(date +%Y-%m-%d).md` — must contain `## HH:MM` headers (e.g. `## 14:30`) followed by `- <observation>` lines. Must NOT contain YAML frontmatter (`---`).
+- Verify no topic-based files: `ls memory/` — must only contain date-named files (`YYYY-MM-DD.md`). No files like `feedback_*.md`, `user_*.md`, or any non-date-named files.
+- Verify MEMORY.md format: `cat MEMORY.md` — significant items must appear under `## YYYY-MM-DD` date headers as `- <observation>` lines. Must NOT contain `[filename](memory/filename.md)` link format.
 
 ## Soul Update
 

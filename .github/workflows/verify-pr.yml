@@ -15,6 +15,16 @@ jobs:
       id-token: write
 
     steps:
+      - name: Skip if already verified this SHA
+        run: |
+          existing=$(gh api "repos/${{ github.repository }}/actions/workflows/verify-pr.yml/runs?head_sha=${{ github.event.pull_request.head.sha }}&status=success" --jq '.workflow_runs[0].id')
+          if [[ -n "$existing" && "$existing" != "null" ]]; then
+            echo "Already verified in run $existing"
+            exit 78
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
