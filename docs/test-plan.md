@@ -96,6 +96,13 @@ Requires a bootstrapped workspace with `SOUL.md`.
 - **Pass**: Prints the bun version number (e.g. `1.x.y`).
 - **Fail**: `Permission denied` or `No such file or directory`.
 
+## Bun Install Cache Permissions
+
+- Build the Docker image: `docker build -t markus-test .`
+- Run: `docker run --rm --entrypoint sh markus-test -c 'mkdir -p /tmp/pd && cp /plugin/package.json /plugin/bun.lock /tmp/pd/ && cd /tmp/pd && bun install --frozen-lockfile'`
+- **Pass**: `bun install` completes with exit code 0. No `AccessDenied` error.
+- **Fail**: `bun install` errors with "unable to write files to tempdir: AccessDenied".
+
 ## qmd MCP in Docker
 
 - Pre-condition: `MEMORY.md` and `memory/` files exist with content.
