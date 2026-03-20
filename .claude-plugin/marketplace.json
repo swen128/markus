@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "markus",
+  "version": "0.1.0",
+  "description": "Persistent memory and scheduled autonomous tasks for Claude Code",
+  "owner": {
+    "name": "swen128"
+  },
+  "plugins": [
+    {
+      "name": "markus",
+      "source": ".",
+      "description": "Persistent memory and scheduled autonomous tasks — memory files, cron scheduling, and workspace personality via MCP channels",
+      "version": "0.1.0"
+    }
+  ]
+}
