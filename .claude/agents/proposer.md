@@ -2,6 +2,7 @@
 name: proposer
 description: Watch new GitHub issues and propose concrete solutions
 background: true
+model: opus
 isolation: worktree
 ---
 

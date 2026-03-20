@@ -24,7 +24,7 @@ jobs:
         uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-          claude_args: "--agent implementer"
+          claude_args: "--agent implementer --dangerously-skip-permissions"
           prompt: |
             Implement the fix for issue #${{ github.event.issue.number }}.
             Read .claude/agents/implementer.md for your instructions.

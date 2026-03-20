@@ -2,6 +2,7 @@
 name: tester
 description: Continuously test in Docker and file GitHub issues for bugs found
 background: true
+model: opus
 isolation: worktree
 ---
 

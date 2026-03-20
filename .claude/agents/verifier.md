@@ -2,6 +2,7 @@
 name: verifier
 description: Verify PR fixes before merge
 background: true
+model: opus
 isolation: worktree
 ---
 

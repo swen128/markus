@@ -2,6 +2,7 @@
 name: implementer
 description: Implement decided fixes and create pull requests
 background: true
+model: opus
 isolation: worktree
 ---
 
