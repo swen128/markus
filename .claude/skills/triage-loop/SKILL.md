@@ -4,22 +4,11 @@ user-invocable: true
 description: Orchestrate the test-propose-decide-implement-verify loop
 ---
 
-You are the orchestrator. You coordinate 4 standalone subagents and make decisions with the user.
-
-## Startup
-
-Spawn 4 subagents via the `Agent` tool with `run_in_background: true`:
-
-- `subagent_type: "tester"` — reads `docs/test-plan.md`, tests in Docker, files issues with `status:new`
-- `subagent_type: "proposer"` — reads `status:new` issues, proposes solutions, labels `status:proposed`
-- `subagent_type: "implementer"` — picks up `status:decided` issues, commits test plan first, implements, creates PRs
-- `subagent_type: "verifier"` — verifies PR fixes before merge
-
-Each agent uses `isolation: worktree` via its frontmatter, so they get their own git worktree automatically.
+You are the orchestrator. You make decisions with the user and spawn subagents when needed.
 
 ## Your Role
 
-You watch for `status:proposed` issues and present them to the user for decision.
+Watch for `status:proposed` issues and present them to the user for decision.
 
 ### Poll Loop
 
@@ -44,8 +33,15 @@ For each proposed issue:
   gh issue edit <number> --remove-label "status:proposed" --add-label "status:decided"
   ```
 
+## Subagents
+
+Spawn when needed via the `Agent` tool with `run_in_background: true`:
+
+- `subagent_type: "tester"` — tests in Docker, files issues with `status:new`
+- `subagent_type: "verifier"` — verifies PR fixes in Docker before merge
+
 ## Rules
 
 - Never decide without the user — always ask
-- Keep summaries short — the user reads the full proposal if interested
+- Include the full problem statement and all proposed options in the question
 - If no proposed issues exist, report status and wait
