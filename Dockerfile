@@ -33,7 +33,7 @@ ENV CLAUDE_CONFIG_DIR=/home/node/.claude
 
 WORKDIR /workspace
 COPY . /plugin
-RUN cd /plugin && bun install --frozen-lockfile && chown -R node:node /plugin /workspace
+RUN cd /plugin && bun install --frozen-lockfile && chown -R node:node /plugin /workspace /usr/local/share/bun
 
 USER node
 VOLUME /home/node/.claude
