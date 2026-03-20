@@ -8,10 +8,17 @@
     "src/bootstrap-nudge.ts"
   ],
   "project": ["src/**/*.ts"],
+  "ignoreBinaries": ["knip", "knip-bun"],
   "eslint": {
     "config": ["eslint.config.js"]
   },
   "typescript": {
     "config": ["tsconfig.json"]
+  },
+  "biome": {
+    "config": ["biome.json"]
+  },
+  "husky": {
+    "config": [".husky/pre-commit"]
   }
 }
