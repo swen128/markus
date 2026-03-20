@@ -1,3 +1,5 @@
+import { access } from "node:fs/promises";
+import { join } from "node:path";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
@@ -106,6 +108,26 @@ const main = async () => {
   const transport = new StdioServerTransport();
   await mcp.connect(transport);
   console.error("[markus] Channel server started");
+
+  const soulExists = await access(join(process.cwd(), "SOUL.md")).then(
+    () => true,
+    () => false,
+  );
+  if (!soulExists) {
+    // Delay to let the client register its channel notification handler.
+    // The MCP SDK silently drops notifications sent before the handler is ready (~31ms after connect).
+    const delay = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
+    await delay(500);
+    await mcp.server.notification({
+      method: "notifications/claude/channel",
+      params: {
+        content:
+          "SOUL.md not found. This workspace has no markus setup. Run the markus:bootstrap skill now to initialize it.",
+        meta: { event_type: "bootstrap_nudge" },
+      },
+    });
+    console.error("[markus] Bootstrap nudge sent via channel notification");
+  }
 };
 
 main().catch((err) => {
