@@ -138,3 +138,9 @@ Requires a bootstrapped workspace with `SOUL.md`.
 - After session starts, verify embeddings were generated: `qmd status` should show 0 documents needing embeddings.
 - Run: `qmd vsearch "what database for analytics"` -- should return the PostgreSQL entry with a non-zero score.
 - **Pass**: Results include the matching entry. **Fail**: "No results found" or hangs.
+- Verify all three models cached: `docker run --rm --entrypoint bash markus-test -c 'ls ~/.cache/qmd/models/'` should show 3 `.gguf` files (embedding, reranker, generation).
+
+## Interactive Test Infrastructure
+
+- Verify wait-for-response works: send a message to a Claude session inside Docker, run `wait-for-response.sh /tmp/claude-stop-sentinel 120`, confirm it returns within 5s of Claude's actual response.
+- Verify unique tmux session names: launch two concurrent test sessions, confirm no session name collisions or `can't find pane` errors.
