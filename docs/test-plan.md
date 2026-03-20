@@ -111,3 +111,14 @@ Requires a bootstrapped workspace with `SOUL.md`.
 - **Fail**: qmd server fails to start (missing binary, network blocked for `bunx`). Or collections aren't created. Or search returns nothing despite matching content.
 - Verify: Debug log shows qmd MCP connected. `qmd collection list` shows `memory-root` and `memory-dir`.
 - Verify: `bunx @tobilu/qmd --version` succeeds without network access. Check `iptables -L -n` confirms firewall is active.
+
+## qmd Vector Search in Docker
+
+- Pre-condition: `MEMORY.md` exists with content, e.g. "2026-03-19: Decided to use PostgreSQL for the analytics service."
+- Build image: `docker build -t markus-test .`
+- Verify model cache exists in image: `docker run --rm --entrypoint bash markus-test -c 'ls ~/.cache/qmd/models/hf_ggml-org_embeddinggemma-300M-Q8_0.gguf'`
+- **Pass**: File exists. **Fail**: No such file.
+- Start container with firewall: `docker run --rm -it --cap-add NET_ADMIN --cap-add NET_RAW -v markus-workspace:/workspace markus-test`
+- After session starts, verify embeddings were generated: `qmd status` should show 0 documents needing embeddings.
+- Run: `qmd vsearch "what database for analytics"` -- should return the PostgreSQL entry with a non-zero score.
+- **Pass**: Results include the matching entry. **Fail**: "No results found" or hangs.
