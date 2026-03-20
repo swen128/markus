@@ -89,6 +89,13 @@ Requires a bootstrapped workspace with `SOUL.md`.
 - **Fail**: Any hook errors out. Or hooks run but produce empty output when files exist.
 - Verify: Debug log shows all hooks executed. No stderr from hook commands.
 
+## bunx Symlink Integrity
+
+- Build the Docker image: `docker build -t markus-test .`
+- Run: `docker run --rm --entrypoint bash markus-test -c 'bunx --version'`
+- **Pass**: Prints the bun version number (e.g. `1.x.y`).
+- **Fail**: `Permission denied` or `No such file or directory`.
+
 ## qmd MCP in Docker
 
 - Pre-condition: `MEMORY.md` and `memory/` files exist with content.
