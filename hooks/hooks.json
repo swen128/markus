@@ -59,6 +59,17 @@
           }
         ]
       }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": { "tool_name": "Write|Edit" },
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/validate-memory.sh\""
+          }
+        ]
+      }
     ]
   }
 }

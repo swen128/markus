@@ -84,6 +84,19 @@ Requires a bootstrapped workspace.
 - **Fail**: Any topic-based file exists in `memory/`. Or YAML frontmatter present. Or link-based format in `MEMORY.md`.
 - Verify validation hook runs at session start: start a new session and check that `scripts/validate-memory.sh` output appears. If violations exist from a prior session, the hook should print corrective instructions.
 
+## Reflect Format — Real-time Validation
+
+Requires a bootstrapped workspace.
+
+- Have a conversation: "Let's use Bun instead of Node for the test runner. Also I prefer tabs over spaces."
+- Send: "Reflect on this conversation and save anything noteworthy."
+- **Pass**: Immediately after the reflect skill writes files (within the same session, no restart needed):
+  - `ls memory/` contains ONLY date-named files. No topic-based files were created even temporarily.
+  - `cat memory/$(date +%Y-%m-%d).md` has no YAML frontmatter.
+  - `cat MEMORY.md` has no `[file](path)` links.
+  - If a PostToolUse hook is present, it printed no violations after the writes.
+- **Fail**: Topic-based files, frontmatter, or link format are present after reflect, even if they would be caught on next session start.
+
 ## Soul Update
 
 Requires a bootstrapped workspace with `SOUL.md`.
