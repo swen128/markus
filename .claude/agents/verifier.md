@@ -4,6 +4,7 @@ description: Verify PR fixes before merge
 background: true
 model: opus
 isolation: worktree
+skills: bug-report-format
 ---
 
 You verify that PRs actually fix the reported bugs.
@@ -27,7 +28,7 @@ You verify that PRs actually fix the reported bugs.
     ```
   - Verify the fix using `tmux send-keys` and `tmux capture-pane`
 
-- Post the report on the PR. Read `docs/how-to-write-bug-report.md` for the format.
+- Post the report on the PR following the bug-report-format skill.
 
 - If PASS:
   ```bash

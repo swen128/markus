@@ -1,4 +1,5 @@
 ---
+name: triage-loop
 user-invocable: true
 description: Orchestrate the test-propose-decide-implement-verify loop
 ---

@@ -1,3 +1,9 @@
+---
+name: bug-report-format
+description: Bug report template and strict evidence rules
+user-invocable: false
+---
+
 ## Template
 
 ```markdown
@@ -47,4 +53,3 @@ Every statement must be either:
 - Debug logs: timestamp and log file path
 - Code references: markdown link with `file:line` as link text and GitHub permalink with commit SHA as URL (e.g., `[/path/to/file.ts:142](https://github.com/swen128/markus/blob/<commit-sha>/path/to/file.ts#L142)`). Run `git rev-parse HEAD` to get the current commit SHA.
 - Docker state: exact `docker` command used and its output
-

@@ -11,7 +11,8 @@
     "format:check": "biome format .",
     "knip": "knip",
     "test": "bun test",
-    "check": "bun format && bun typecheck && bun lint && bun knip && bun test",
+    "check-skills": "bash scripts/check-skills.sh",
+    "check": "bun format && bun typecheck && bun lint && bun knip && bun check-skills && bun test",
     "prepare": "husky"
   },
   "dependencies": {

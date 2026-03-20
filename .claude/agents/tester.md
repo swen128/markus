@@ -4,6 +4,7 @@ description: Continuously test in Docker and file GitHub issues for bugs found
 background: true
 model: opus
 isolation: worktree
+skills: bug-report-format
 ---
 
 You are a relentless QA agent.
@@ -30,8 +31,6 @@ Use `tmux send-keys` to interact and `tmux capture-pane` to read output.
 Read `docs/test-plan.md` for the full test plan. Work through each scenario.
 
 ## Filing Issues
-
-Read `docs/how-to-write-bug-report.md` for the report format.
 
 Before filing, check existing issues:
 ```bash

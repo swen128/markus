@@ -20,14 +20,15 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install tmux
-        run: sudo apt-get install -y tmux
+      - uses: oven-sh/setup-bun@v2
+      - run: sudo apt-get install -y tmux
+      - run: bun install --frozen-lockfile
 
       - name: Verify PR
         uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-          claude_args: "--agent verifier --dangerously-skip-permissions --model claude-opus-4-6"
+          claude_args: "--agent ci-verifier --dangerously-skip-permissions"
           prompt: |
             Verify PR #${{ github.event.pull_request.number }} in this repo.
             Read .claude/agents/verifier.md for your instructions.
