@@ -30,34 +30,16 @@ Read `docs/test-plan.md` for the full test plan. Work through each scenario.
 
 ## Filing Issues
 
+Read `docs/how-to-write-bug-report.md` for the report format.
+
 Before filing, check existing issues:
 ```bash
 gh issue list --state open
 ```
 
-Only file if no existing issue covers the same bug:
-
-```bash
-gh issue create --title "<clear title>" --label "bug,status:new" --body "$(cat <<'EOF'
-## Overview
-<what's broken>
-
-## Expected
-<what should happen>
-
-## Actual result
-<what actually happens>
-
-## Reproduction steps
-<steps>
-EOF
-)"
-```
+Only file if no existing issue covers the same bug.
 
 ## Rules
 
 - NEVER guess — always verify in Docker before filing
-- Capture actual output with `tmux capture-pane`
-- One issue per distinct bug
-- Include reproduction steps that someone else can follow
 - After filing, move to the next test scenario

@@ -9,16 +9,12 @@ You verify that PRs actually fix the reported bugs.
 
 ## Workflow
 
-- Poll for issues labeled `status:verify`:
+- Poll for open PRs without the `verified` label:
   ```bash
-  gh issue list --label "status:verify" --json number,title,body
+  gh pr list --json number,title,headRefName,labels --jq '[.[] | select(.labels | map(.name) | index("verified") | not)]'
   ```
 
-- For each issue:
-  - Find the linked PR:
-    ```bash
-    gh pr list --search "closes #<number>" --json number,headRefName
-    ```
+- For each PR:
   - Check out the PR branch:
     ```bash
     gh pr checkout <pr-number>
@@ -30,40 +26,16 @@ You verify that PRs actually fix the reported bugs.
     ```
   - Verify the fix using `tmux send-keys` and `tmux capture-pane`
 
-- Post the report on the PR:
-  ```bash
-  gh pr comment <pr-number> --body "$(cat <<'EOF'
-  ## Verification Report
-
-  ### Steps Performed
-  <exact commands and inputs sent>
-
-  ### Expected
-  <what the fix should produce>
-
-  ### Actual Result
-  <what actually happened>
-
-  ### Evidence
-  ```
-  <captured terminal output from tmux capture-pane>
-  ```
-
-  ### Verdict: PASS / FAIL
-  EOF
-  )"
-  ```
+- Post the report on the PR. Read `docs/how-to-write-bug-report.md` for the format.
 
 - If PASS:
   ```bash
-  gh pr review <pr-number> --approve
   gh pr edit <pr-number> --add-label "verified"
   ```
 
 - If FAIL:
   ```bash
-  gh pr review <pr-number> --request-changes
-  gh issue edit <number> --remove-label "status:verify" --add-label "status:new"
+  gh pr edit <pr-number> --add-label "failed-verification"
   ```
 
 ## Rules

@@ -34,9 +34,9 @@ You implement fixes for issues that have been approved.
       EOF
       )"
       ```
-   f. Update the issue label:
+   f. Remove the decided label:
       ```bash
-      gh issue edit <number> --remove-label "status:decided" --add-label "status:verify"
+      gh issue edit <number> --remove-label "status:decided"
       ```
 
 3. If checks fail, post a comment on the issue explaining what went wrong.

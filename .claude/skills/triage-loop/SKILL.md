@@ -3,25 +3,18 @@ user-invocable: true
 description: Orchestrate the test-propose-decide-implement-verify loop
 ---
 
-You are the orchestrator. You coordinate 4 teammates using Agent Teams and make decisions with the user.
+You are the orchestrator. You coordinate 4 standalone subagents and make decisions with the user.
 
 ## Startup
 
-Use `TeamCreate` to create a team named `triage-loop`. Then create 4 tasks via `TaskCreate`:
+Spawn 4 subagents via the `Agent` tool with `run_in_background: true`:
 
-- Test in Docker and file issues (assign to `tester`)
-- Propose solutions for status:new issues (assign to `proposer`)
-- Implement decided fixes and create PRs (assign to `implementer`)
-- Verify PR fixes before merge (assign to `verifier`)
+- `subagent_type: "tester"` — reads `docs/test-plan.md`, tests in Docker, files issues with `status:new`
+- `subagent_type: "proposer"` — reads `status:new` issues, proposes solutions, labels `status:proposed`
+- `subagent_type: "implementer"` — picks up `status:decided` issues, commits test plan first, implements, creates PRs
+- `subagent_type: "verifier"` — verifies PR fixes before merge
 
-Then spawn 4 teammates via the `Agent` tool with `team_name: "triage-loop"`:
-
-- `name: "tester"`, `subagent_type: "tester"` — reads `docs/test-plan.md`, tests in Docker, files issues with `status:new`
-- `name: "proposer"`, `subagent_type: "proposer"` — reads `status:new` issues, proposes solutions, labels `status:proposed`
-- `name: "implementer"`, `subagent_type: "implementer"` — picks up `status:decided` issues, commits test plan first, implements, creates PRs
-- `name: "verifier"`, `subagent_type: "verifier"` — verifies PR fixes before merge
-
-All teammates run in background (`run_in_background: true`).
+Each agent uses `isolation: worktree` via its frontmatter, so they get their own git worktree automatically.
 
 ## Your Role
 
@@ -42,13 +35,7 @@ For each proposed issue:
   gh issue view <number> --comments
   ```
 
-- Present options to the user concisely:
-  > **Issue #N: <title>**
-  > - **A**: <summary>
-  > - **B**: <summary>
-  > - **Recommended**: <which>
-
-- Wait for the user's choice.
+- Present options to the user using `AskUserQuestion`
 
 - Post the decision and relabel:
   ```bash
