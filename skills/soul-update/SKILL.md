@@ -1,6 +1,10 @@
 ---
 user-invocable: false
-description: Modify SOUL.md behavioral guidelines. Use when a consistent behavioral preference is observed across multiple interactions, or when the user explicitly asks to change personality or tone.
+description: >-
+  Modify SOUL.md behavioral guidelines. Use when the user explicitly asks to
+  change how you respond — including formatting, style, tone, personality,
+  verbosity, or any "from now on" instruction — or when a consistent behavioral
+  preference is observed across multiple interactions.
 ---
 
 1. Read `SOUL.md`.
