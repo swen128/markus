@@ -13,7 +13,7 @@ Always use Docker in a tmux pane:
 ```bash
 docker build -t markus-test .
 docker volume create markus-claude-config
-tmux split-window -h "docker run --rm -it --cap-add NET_ADMIN --cap-add NET_RAW -v markus-claude-config:/home/node/.claude markus-test"
+tmux split-window -h "docker run --rm -it --cap-add NET_ADMIN --cap-add NET_RAW -v markus-claude-config:/home/node/.claude -v markus-workspace:/workspace markus-test"
 ```
 
 First run requires `/login` inside the container. Credentials persist in the volume.

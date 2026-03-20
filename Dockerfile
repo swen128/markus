@@ -36,5 +36,6 @@ RUN cd /plugin && bun install --frozen-lockfile && chown -R node:node /plugin /w
 
 USER node
 VOLUME /home/node/.claude
+VOLUME /workspace
 
 ENTRYPOINT ["sh", "-c", "sudo init-firewall.sh && exec claude --dangerously-skip-permissions --plugin-dir /plugin --dangerously-load-development-channels plugin:markus@inline"]
