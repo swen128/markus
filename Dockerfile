@@ -41,10 +41,11 @@ RUN mkdir -p /tmp/qmd-warmup && \
     qmd collection add /tmp/qmd-warmup --name warmup --mask doc.md && \
     qmd update && \
     qmd embed && \
+    qmd vsearch "warmup" || true && \
     qmd collection remove warmup && \
     rm -rf /tmp/qmd-warmup
 
 VOLUME /home/node/.claude
 VOLUME /workspace
 
-ENTRYPOINT ["sh", "-c", "sudo init-firewall.sh && exec claude --dangerously-skip-permissions --plugin-dir /plugin --dangerously-load-development-channels plugin:markus@inline"]
+ENTRYPOINT ["bash", "/plugin/scripts/docker-entrypoint.sh"]
