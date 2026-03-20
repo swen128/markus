@@ -1,0 +1,35 @@
+name: Verify PR
+
+on:
+  pull_request:
+    types: [opened, synchronize, ready_for_review, reopened]
+
+jobs:
+  verify:
+    if: github.event.pull_request.user.login == github.repository_owner || github.event.pull_request.user.login == 'app/claude'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install tmux
+        run: sudo apt-get install -y tmux
+
+      - name: Verify PR
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          claude_args: "--agent verifier --dangerously-skip-permissions --model claude-opus-4-6"
+          prompt: |
+            Verify PR #${{ github.event.pull_request.number }} in this repo.
+            Read .claude/agents/verifier.md for your instructions.
+            Read docs/how-to-write-bug-report.md for report format.
+            Read docs/values.md for principles.
