@@ -13,7 +13,31 @@
         "hooks": [
           {
             "type": "command",
-            "command": "for f in SOUL.md IDENTITY.md USER.md AGENTS.md TOOLS.md; do [ -f \"$f\" ] && echo \"--- $f ---\" && cat \"$f\" && echo; done; [ ! -f SOUL.md ] && echo '--- BOOTSTRAP ---' && echo 'SOUL.md not found. Run the markus:bootstrap skill to set up this workspace.'"
+            "command": "bun run \"${CLAUDE_PLUGIN_ROOT}/src/workspace-context.ts\""
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun run \"${CLAUDE_PLUGIN_ROOT}/src/system-instructions.ts\""
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun run \"${CLAUDE_PLUGIN_ROOT}/src/bootstrap-nudge.ts\""
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if command -v qmd >/dev/null 2>&1; then qmd collection list 2>/dev/null | grep -q memory-root || ([ -f MEMORY.md ] && qmd collection add . --name memory-root --mask MEMORY.md 2>/dev/null); qmd collection list 2>/dev/null | grep -q memory-dir || ([ -d memory ] && qmd collection add memory --name memory-dir --mask '**/*.md' 2>/dev/null); qmd update 2>/dev/null; fi"
           }
         ]
       }

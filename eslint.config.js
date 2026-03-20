@@ -93,7 +93,12 @@ export default [
     },
   },
   {
-    files: ["src/server.ts"],
+    files: [
+      "src/server.ts",
+      "src/system-instructions.ts",
+      "src/workspace-context.ts",
+      "src/bootstrap-nudge.ts",
+    ],
     rules: {
       "no-console": "off",
     },
