@@ -21,20 +21,22 @@ jobs:
     permissions:
       contents: read
       issues: write
-      id-token: write
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 1
 
       - uses: oven-sh/setup-bun@v2
       - run: bun install --frozen-lockfile
+      - run: npm install -g @anthropic-ai/claude-code@latest
 
       - name: Run tester agent
-        uses: anthropics/claude-code-action@v1
-        with:
-          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-          claude_args: "--agent tester --dangerously-skip-permissions"
-          prompt: "Run all test scenarios in tests/scenarios/ and file GitHub issues for any failures."
+        env:
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          claude --agent tester \
+            --dangerously-skip-permissions \
+            -p "Run all test scenarios in tests/scenarios/ and file GitHub issues for any failures."
