@@ -18,13 +18,35 @@ docker build -t markus-test .
 docker volume create markus-claude-config
 ```
 
-Launch interactive sessions in tmux panes:
+Launch interactive sessions in tmux panes using a unique session name:
 
 ```bash
-tmux split-window -h "docker run --rm -it --cap-add NET_ADMIN --cap-add NET_RAW -v markus-claude-config:/home/node/.claude markus-test"
+SESSION="markus-test-$(date +%s)"
+CONTAINER="markus-container-$(date +%s)"
+docker run --rm -it --name "$CONTAINER" --cap-add NET_ADMIN --cap-add NET_RAW -v markus-claude-config:/home/node/.claude markus-test
 ```
 
-Use `tmux send-keys` to interact and `tmux capture-pane` to read output.
+You can also run in a tmux session:
+
+```bash
+tmux new-session -d -s "$SESSION" "docker run --rm -it --name $CONTAINER --cap-add NET_ADMIN --cap-add NET_RAW -v markus-claude-config:/home/node/.claude markus-test"
+```
+
+Use `tmux send-keys -t "$SESSION"` to interact and `tmux capture-pane -t "$SESSION" -p` to read output.
+
+After sending input, wait for the Stop hook sentinel instead of blind sleeping:
+
+```bash
+tmux send-keys -t "$SESSION" "Hello" Enter
+docker exec "$CONTAINER" bash /plugin/scripts/wait-for-response.sh /tmp/claude-stop-sentinel 120
+tmux capture-pane -t "$SESSION" -p
+```
+
+Always clean up when done:
+
+```bash
+tmux kill-session -t "$SESSION" 2>/dev/null || true
+```
 
 ## What to Test
 

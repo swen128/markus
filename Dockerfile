@@ -41,6 +41,7 @@ RUN mkdir -p /tmp/qmd-warmup && \
     qmd collection add /tmp/qmd-warmup --name warmup --mask doc.md && \
     qmd update && \
     qmd embed && \
+    qmd vsearch "warmup" || true && \
     qmd collection remove warmup && \
     rm -rf /tmp/qmd-warmup
 

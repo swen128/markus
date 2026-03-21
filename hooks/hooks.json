@@ -50,6 +50,16 @@
         ]
       }
     ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "touch /tmp/claude-stop-sentinel"
+          }
+        ]
+      }
+    ],
     "PostToolUse": [
       {
         "matcher": { "tool_name": "Write|Edit" },
