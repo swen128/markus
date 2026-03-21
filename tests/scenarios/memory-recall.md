@@ -12,11 +12,11 @@ bun run tests/harness.ts --fixture workspace --max-turns 5 "What database did we
 ## Pass
 
 - Claude answers "PostgreSQL"
-- Claude uses qmd MCP tools (search or vsearch) to find the answer, not Grep/Read
+- Claude uses qmd MCP tools (`query`, `get`, or `multi_get`) to find the answer
+- Acceptable fallback: Claude uses Read/Grep on MEMORY.md if qmd returns empty results
 
 ## Fail
 
 - Claude says it doesn't know
 - Claude hallucinates a different database
-- Claude uses Grep or Read instead of qmd tools
-- Claude answers correctly but only from workspace-context injection (acceptable for now, but qmd usage is preferred)
+- Claude answers correctly but only from workspace-context injection without attempting qmd first

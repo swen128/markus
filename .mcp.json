@@ -2,12 +2,19 @@
   "mcpServers": {
     "markus": {
       "command": "bun",
-      "args": ["run", "${CLAUDE_PLUGIN_ROOT}/src/server.ts"],
+      "args": [
+        "run",
+        "${CLAUDE_PLUGIN_ROOT}/src/server.ts"
+      ],
       "cwd": "${CLAUDE_PLUGIN_DATA}"
     },
     "qmd": {
       "command": "bunx",
-      "args": ["@tobilu/qmd", "mcp"]
+      "args": [
+        "@tobilu/qmd",
+        "mcp"
+      ],
+      "cwd": "${CLAUDE_PROJECT_DIR}"
     }
   }
 }
