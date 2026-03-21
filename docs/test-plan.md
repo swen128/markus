@@ -1,3 +1,7 @@
+## Pre-condition
+
+All interactive tests must launch Claude with `--agent markus`.
+
 ## Bootstrap
 
 Fresh workspace with no `SOUL.md`.
