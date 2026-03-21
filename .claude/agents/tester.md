@@ -34,7 +34,7 @@ Before filing, check existing issues:
 gh issue list --state open
 ```
 
-Only file if no existing issue covers the same bug.
+Only file if no existing issue covers the same bug. Always add the `status:new` label when filing (`gh issue create --label status:new ...`).
 
 ## Rules
 
