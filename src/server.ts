@@ -9,7 +9,7 @@ const dataDir = process.env.CLAUDE_PLUGIN_DATA ?? `${process.env.HOME}/.claude/p
 
 const main = async () => {
   const mcp = new McpServer(
-    { name: "markus", version: "0.1.0" },
+    { name: "personal-assistant", version: "0.1.0" },
     {
       capabilities: {
         experimental: { "claude/channel": {} },
@@ -32,14 +32,16 @@ const main = async () => {
           },
         },
       })
-      .then(() => console.error(`[markus] Cron fired: ${task.id}`))
-      .catch((err) => console.error(`[markus] Notification error for ${task.id}:`, err));
+      .then(() => console.error(`[personal-assistant] Cron fired: ${task.id}`))
+      .catch((err) =>
+        console.error(`[personal-assistant] Notification error for ${task.id}:`, err),
+      );
   });
 
   const loaded = await cron.loadPersisted();
   if (loaded !== null) {
     console.error(
-      `[markus] Loaded ${loaded.loaded} persisted cron tasks (${loaded.skipped} skipped)`,
+      `[personal-assistant] Loaded ${loaded.loaded} persisted cron tasks (${loaded.skipped} skipped)`,
     );
   }
 
@@ -107,7 +109,7 @@ const main = async () => {
 
   const transport = new StdioServerTransport();
   await mcp.connect(transport);
-  console.error("[markus] Channel server started");
+  console.error("[personal-assistant] Channel server started");
 
   const soulExists = await access(join(process.cwd(), "SOUL.md")).then(
     () => true,
@@ -126,11 +128,11 @@ const main = async () => {
         meta: { event_type: "bootstrap_nudge" },
       },
     });
-    console.error("[markus] Bootstrap nudge sent via channel notification");
+    console.error("[personal-assistant] Bootstrap nudge sent via channel notification");
   }
 };
 
 main().catch((err) => {
-  console.error("[markus] Fatal:", err);
+  console.error("[personal-assistant] Fatal:", err);
   process.exit(1);
 });

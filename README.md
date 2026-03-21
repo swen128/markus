@@ -9,7 +9,7 @@ Requires [Bun](https://bun.sh) and a Claude.ai account (not API key).
 ```bash
 /plugin marketplace add swen128/markus
 /plugin install markus@markus
-claude --dangerously-load-development-channels plugin:markus@markus
+claude --agent personal-assistant --dangerously-load-development-channels plugin:markus@markus
 ```
 
 On first session, Markus introduces itself and asks about you — your name, preferences, how you like to work. Everything it learns carries over to the next session.
@@ -17,7 +17,7 @@ On first session, Markus introduces itself and asks about you — your name, pre
 Markus works best when paired with a messaging channel so it can reach you outside the terminal. Install the [Telegram](https://github.com/anthropics/claude-plugins-official/tree/main/external_plugins/telegram) or [Discord](https://github.com/anthropics/claude-plugins-official/tree/main/external_plugins/discord) plugin and launch with both:
 
 ```bash
-claude --channels plugin:telegram@claude-plugins-official \
+claude --agent personal-assistant --channels plugin:telegram@claude-plugins-official \
        --dangerously-load-development-channels plugin:markus@markus
 ```
 

@@ -11,7 +11,7 @@ You verify that PRs actually fix the reported bugs.
 
 - Launch Claude Code with the plugin in a tmux session:
   ```bash
-  tmux new-session -d -s test "claude --dangerously-skip-permissions --plugin-dir . --dangerously-load-development-channels plugin:markus@inline"
+  tmux new-session -d -s test "claude --dangerously-skip-permissions --agent personal-assistant --plugin-dir . --dangerously-load-development-channels plugin:markus@inline"
   ```
 
 - Interact using `tmux send-keys` and wait for the Stop hook sentinel instead of sleeping:

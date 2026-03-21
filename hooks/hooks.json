@@ -21,14 +21,6 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun run \"${CLAUDE_PLUGIN_ROOT}/src/system-instructions.ts\""
-          }
-        ]
-      },
-      {
-        "hooks": [
-          {
-            "type": "command",
             "command": "bun run \"${CLAUDE_PLUGIN_ROOT}/src/bootstrap-nudge.ts\""
           }
         ]

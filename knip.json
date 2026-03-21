@@ -1,12 +1,7 @@
 {
   "$schema": "https://unpkg.com/knip@latest/schema.json",
   "ignoreExportsUsedInFile": true,
-  "entry": [
-    "src/server.ts",
-    "src/system-instructions.ts",
-    "src/workspace-context.ts",
-    "src/bootstrap-nudge.ts"
-  ],
+  "entry": ["src/server.ts", "src/workspace-context.ts", "src/bootstrap-nudge.ts"],
   "project": ["src/**/*.ts"],
   "ignoreBinaries": ["knip", "knip-bun"],
   "eslint": {
