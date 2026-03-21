@@ -70,7 +70,7 @@ const collectMessages = async (cwd: string): Promise<readonly SDKMessage[]> => {
   const controller = new AbortController();
   setTimeout(() => controller.abort(), 120_000);
   const messages: SDKMessage[] = [];
-  for await (const msg of query({
+  const q = query({
     prompt,
     options: {
       cwd,
@@ -82,8 +82,13 @@ const collectMessages = async (cwd: string): Promise<readonly SDKMessage[]> => {
       ...(values.resume ? { resume: values.resume } : {}),
       env: { ...process.env, CLAUDE_CODE_DISABLE_AUTO_MEMORY: "1" },
     },
-  })) {
+  });
+  for await (const msg of q) {
     messages.push(msg);
+    if (msg.type === "result") {
+      q.close();
+      break;
+    }
   }
   return messages;
 };
@@ -100,7 +105,8 @@ const extractTools = (messages: readonly SDKMessage[]): readonly string[] =>
 const extractResult = (messages: readonly SDKMessage[]) => {
   const result = messages.find((m) => m.type === "result");
   if (!result || result.type !== "result") return { sessionId: "", response: "" };
-  if (result.subtype !== "success") return { sessionId: result.session_id, response: "" };
+  if (result.subtype !== "success")
+    return { sessionId: result.session_id, response: `[${result.subtype}]` };
   return { sessionId: result.session_id, response: result.result };
 };
 
@@ -130,3 +136,5 @@ console.log(`deleted=${deleted.join(",") || "(none)"}`);
   console.log(`\n--- ${f} ---`);
   console.log(after.contents[f]);
 });
+
+process.exit(0);
