@@ -23,7 +23,7 @@ const INSTRUCTIONS = [
   "",
   "When the user shares information worth persisting, use the correct skill:",
   "",
-  "- **Behavioral preferences** (\"from now on\", \"always\", \"never\", style/tone/format/verbosity requests)",
+  '- **Behavioral preferences** ("from now on", "always", "never", style/tone/format/verbosity requests)',
   "  → invoke the `soul-update` skill to edit SOUL.md. Do NOT just acknowledge.",
   "- **Personal facts** (name, timezone, pronouns, tools they use)",
   "  → invoke the `user-update` skill to edit USER.md.",
