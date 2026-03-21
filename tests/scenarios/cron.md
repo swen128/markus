@@ -6,7 +6,7 @@ User asks to schedule a recurring task.
 ## Steps
 
 ```bash
-bun run tests/harness.ts --fixture workspace --max-turns 5 "Remind me to check deployment every 30 minutes"
+bun run tests/harness.ts --fixture workspace --agent personal-assistant --max-turns 5 "Remind me to check deployment every 30 minutes"
 ```
 
 ## Pass

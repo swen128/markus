@@ -13,6 +13,7 @@ const { values, positionals } = parseArgs({
     fixture: { type: "string" },
     resume: { type: "string" },
     "max-turns": { type: "string" },
+    agent: { type: "string" },
   },
   allowPositionals: true,
 });
@@ -20,7 +21,7 @@ const { values, positionals } = parseArgs({
 const prompt = positionals.join(" ");
 if (!prompt) {
   console.error(
-    "Usage: bun run tests/harness.ts --fixture <name> [--resume <session-id>] [--max-turns <n>] <prompt>",
+    "Usage: bun run tests/harness.ts --fixture <name> [--agent <name>] [--resume <session-id>] [--max-turns <n>] <prompt>",
   );
   process.exit(1);
 }
@@ -79,6 +80,7 @@ const collectMessages = async (cwd: string): Promise<readonly SDKMessage[]> => {
       permissionMode: "bypassPermissions",
       allowDangerouslySkipPermissions: true,
       abortController: controller,
+      ...(values.agent ? { agent: values.agent } : {}),
       ...(values.resume ? { resume: values.resume } : {}),
       env: { ...process.env, CLAUDE_CODE_DISABLE_AUTO_MEMORY: "1" },
     },
