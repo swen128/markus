@@ -1,26 +1,20 @@
 name: Test
 
 on:
-  push:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
     branches: [main]
-    paths:
-      - src/**
-      - skills/**
-      - templates/**
-      - hooks/**
-      - tests/**
-      - package.json
-      - bun.lock
-      - .github/workflows/test.yml
-      - .claude/agents/tester.md
   workflow_dispatch:
 
 jobs:
   test:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     permissions:
       contents: read
       issues: write
+      id-token: write
 
     steps:
       - name: Checkout repository
@@ -30,13 +24,10 @@ jobs:
 
       - uses: oven-sh/setup-bun@v2
       - run: bun install --frozen-lockfile
-      - run: npm install -g @anthropic-ai/claude-code@latest
 
       - name: Run tester agent
-        env:
-          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          claude --agent tester \
-            --dangerously-skip-permissions \
-            -p "Run all test scenarios in tests/scenarios/ and file GitHub issues for any failures."
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          claude_args: "--agent tester --dangerously-skip-permissions"
+          prompt: "Run all test scenarios in tests/scenarios/ and file GitHub issues for any failures."
