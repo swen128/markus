@@ -6,7 +6,7 @@ on:
 
 jobs:
   propose:
-    if: github.event.sender.login == github.repository_owner && (github.event.label.name == 'status:new' || (github.event.action == 'opened' && contains(github.event.issue.labels.*.name, 'status:new')))
+    if: (github.event.sender.login == github.repository_owner || github.event.sender.login == 'github-actions[bot]') && (github.event.label.name == 'status:new' || (github.event.action == 'opened' && contains(github.event.issue.labels.*.name, 'status:new')))
     runs-on: ubuntu-latest
     permissions:
       contents: read
