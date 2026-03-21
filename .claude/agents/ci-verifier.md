@@ -23,7 +23,9 @@ You verify that PRs actually fix the reported bugs.
 
 - Run the reproduction steps from the linked issue
 
-- Post the report on the PR following the bug-report-format skill.
+- Post the report on the PR following the bug-report-format skill. Include the tested commit SHA as a link (e.g. `[abc1234](https://github.com/OWNER/REPO/commit/abc1234)`).
+
+- If a previous verification comment from this bot already exists on the PR, **update it** (`gh api --method PATCH repos/OWNER/REPO/issues/comments/COMMENT_ID -f body=...`) instead of posting a new comment.
 
 - If PASS:
   ```bash
