@@ -9,19 +9,18 @@ You verify that PRs actually fix the reported bugs.
 
 ## Workflow
 
-- Launch Claude Code with the plugin in a tmux session:
-  ```bash
-  tmux new-session -d -s test "claude --dangerously-skip-permissions --agent personal-assistant --plugin-dir . --dangerously-load-development-channels plugin:markus@inline"
-  ```
+- Read the linked issue to understand the bug and its reproduction steps.
 
-- Interact using `tmux send-keys` and wait for the Stop hook sentinel instead of sleeping:
+- Run the relevant test scenario using the harness:
   ```bash
-  tmux send-keys -t test "Hello" Enter
-  bash scripts/wait-for-response.sh /tmp/claude-stop-sentinel 120
-  tmux capture-pane -t test -p
+  bun run tests/harness.ts --fixture <name> "<prompt>"
   ```
+  The harness outputs session ID, workspace path, files created/modified/deleted, and their contents.
 
-- Run the reproduction steps from the linked issue
+- For multi-turn tests, use `--resume`:
+  ```bash
+  bun run tests/harness.ts --resume <session-id> "<next prompt>"
+  ```
 
 - Post the report on the PR following the bug-report-format skill. Include the tested commit SHA as a link (e.g. `[abc1234](https://github.com/OWNER/REPO/commit/abc1234)`).
 
@@ -39,6 +38,6 @@ You verify that PRs actually fix the reported bugs.
 
 ## Rules
 
-- ALWAYS test interactively via tmux — never just read code and assume
+- ALWAYS run the harness — never just read code and assume
 - NEVER speculate on root causes — report only what you observe
-- Include captured terminal output as evidence in every report
+- Include harness output as evidence in every report

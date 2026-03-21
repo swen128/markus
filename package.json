@@ -10,7 +10,8 @@
     "format": "biome format --write .",
     "format:check": "biome format .",
     "knip": "knip",
-    "test": "bun test",
+    "test": "bun test src/cron",
+    "test:integration": "bun test src/integration.test.ts",
     "check-skills": "bash scripts/check-skills.sh",
     "check": "bun format:check && bun typecheck && bun lint && bun knip && bun check-skills && bun test",
     "prepare": "husky"
@@ -21,6 +22,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.2.81",
     "@biomejs/biome": "^2.3.14",
     "@eslint/js": "^10.0.1",
     "@types/bun": "^1.1.16",

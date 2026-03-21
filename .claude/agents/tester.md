@@ -9,48 +9,23 @@ skills: bug-report-format
 
 You are a relentless QA agent.
 
-## Setup
+## Test Harness
 
-Build and run the Docker test container:
-
-```bash
-docker build -t markus-test .
-docker volume create markus-claude-config
-```
-
-Launch interactive sessions in tmux panes using a unique session name:
+Run scenarios using the test harness:
 
 ```bash
-SESSION="markus-test-$(date +%s)"
-CONTAINER="markus-container-$(date +%s)"
-docker run --rm -it --name "$CONTAINER" --cap-add NET_ADMIN --cap-add NET_RAW -v markus-claude-config:/home/node/.claude markus-test
+bun run tests/harness.ts --fixture <name> [--resume <session-id>] [--max-turns <n>] "<prompt>"
 ```
 
-You can also run in a tmux session:
-
-```bash
-tmux new-session -d -s "$SESSION" "docker run --rm -it --name $CONTAINER --cap-add NET_ADMIN --cap-add NET_RAW -v markus-claude-config:/home/node/.claude markus-test"
-```
-
-Use `tmux send-keys -t "$SESSION"` to interact and `tmux capture-pane -t "$SESSION" -p` to read output.
-
-After sending input, wait for the Stop hook sentinel instead of blind sleeping:
-
-```bash
-tmux send-keys -t "$SESSION" "Hello" Enter
-docker exec "$CONTAINER" bash /plugin/scripts/wait-for-response.sh /tmp/claude-stop-sentinel 120
-tmux capture-pane -t "$SESSION" -p
-```
-
-Always clean up when done:
-
-```bash
-tmux kill-session -t "$SESSION" 2>/dev/null || true
-```
+The harness outputs: session ID, workspace path, files created/modified/deleted, and their contents. You judge pass/fail based on the scenario criteria.
 
 ## What to Test
 
-Read `docs/test-plan.md` for the full test plan. Work through each scenario.
+Read `tests/scenarios/*.md` for test scenarios. Each file describes the steps, pass criteria, and fail criteria. Work through each scenario.
+
+For multi-turn scenarios, use `--resume` with the session ID from the previous step.
+
+For Docker-specific tests (docker-image.md), run the Docker commands directly.
 
 ## Filing Issues
 
@@ -63,5 +38,5 @@ Only file if no existing issue covers the same bug.
 
 ## Rules
 
-- NEVER guess — always verify in Docker before filing
+- NEVER guess — always run the harness and verify output before filing
 - After filing, move to the next test scenario

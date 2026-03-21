@@ -26,6 +26,7 @@ export default [
         clearInterval: "readonly",
         Response: "readonly",
         Bun: "readonly",
+        AbortController: "readonly",
         performance: "readonly",
       },
     },
@@ -90,6 +91,7 @@ export default [
     rules: {
       "functional/no-throw-statements": "off",
       "@typescript-eslint/no-non-null-assertion": "off",
+      "no-empty": "off",
     },
   },
   {
