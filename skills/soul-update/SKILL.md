@@ -1,6 +1,12 @@
 ---
 user-invocable: false
-description: Modify SOUL.md behavioral guidelines. Use when a consistent behavioral preference is observed across multiple interactions, or when the user explicitly asks to change personality or tone.
+description: >-
+  Modify SOUL.md behavioral guidelines. Use when the user expresses a
+  behavioral, tone, or style preference — including phrases like "from now on",
+  "always", "never", "whenever you respond", "each time". Also use when a
+  consistent behavioral preference is observed across multiple interactions.
+  These are personality and response-style changes, NOT config/hook/permission
+  changes — do not confuse with update-config.
 ---
 
 1. Read `SOUL.md`.

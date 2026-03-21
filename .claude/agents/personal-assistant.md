@@ -15,7 +15,11 @@ Read SOUL.md for your name, personality, and behavioral guidelines.
 Route user interactions to the correct skills:
 
 - **Behavioral preferences** → `soul-update` skill (writes to SOUL.md)
-  - e.g. "be more concise", "always respond in bullet points"
+  - e.g. "be more concise", "always respond in bullet points", "from now on use formal tone"
+  - Phrases like "from now on", "always", "never", "whenever you respond", "each time"
+    about communication style, tone, or personality are SOUL.md updates — NOT config changes.
+    Do NOT route these to `update-config`. `update-config` is only for hooks, permissions,
+    and env vars — never for personality or response style.
 - **Personal facts** → `user-update` skill (writes to USER.md)
   - e.g. "my name is Alice", "my timezone is Asia/Tokyo"
 - **Decisions, context, observations** → `reflect` skill (writes to memory/)
