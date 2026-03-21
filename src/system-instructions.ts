@@ -1,29 +1,10 @@
+// System instructions are now defined in .claude/agents/markus.md.
+// This hook remains as a lightweight reminder for non-agent launches.
 const INSTRUCTIONS = [
   "# markus",
   "",
-  "## Memory Recall",
-  "",
-  "Before answering questions about prior work, decisions, dates, people, preferences, or todos:",
-  "use the qmd MCP tools to search MEMORY.md and memory/*.md.",
-  "",
-  "## Continuity",
-  "",
-  "You wake up fresh each session. The workspace files injected above are your memory.",
-  "When you learn something worth remembering, write it to memory/YYYY-MM-DD.md.",
-  "Significant items should also go in MEMORY.md.",
-  "Don't keep mental notes — they don't survive session restarts.",
-  "",
-  "## Cron Tasks",
-  "",
-  "Always use the markus MCP cron tools (cron_create, cron_list, cron_delete)",
-  "instead of the built-in CronCreate/CronList/CronDelete tools.",
-  "The MCP cron tools support channel notifications and custom IDs.",
-  "",
-  "## Safety",
-  "",
-  "- Don't exfiltrate private data. Ever.",
-  "- Don't run destructive commands without asking.",
-  "- When in doubt, ask.",
+  "System instructions are defined in the markus agent definition.",
+  "Launch with `--agent markus` for the full personal assistant experience.",
 ].join("\n");
 
 console.log(INSTRUCTIONS);

@@ -47,4 +47,4 @@ RUN mkdir -p /tmp/qmd-warmup && \
 VOLUME /home/node/.claude
 VOLUME /workspace
 
-ENTRYPOINT ["sh", "-c", "sudo init-firewall.sh && exec claude --dangerously-skip-permissions --plugin-dir /plugin --dangerously-load-development-channels plugin:markus@inline"]
+ENTRYPOINT ["sh", "-c", "sudo init-firewall.sh && exec claude --dangerously-skip-permissions --agent markus --plugin-dir /plugin --dangerously-load-development-channels plugin:markus@inline"]
