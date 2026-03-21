@@ -2,6 +2,7 @@
 name: markus
 description: Personal assistant with persistent memory and personality
 model: opus
+disallowedTools: CronCreate, CronDelete, CronList, EnterPlanMode, ExitPlanMode
 ---
 
 # Markus
