@@ -1,4 +1,4 @@
-import { query, type SDKMessage } from "@anthropic-ai/claude-agent-sdk";
+import { query, type SDKMessage, type SDKUserMessage } from "@anthropic-ai/claude-agent-sdk";
 import { mkdtemp, readdir, readFile, cp } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
@@ -70,8 +70,31 @@ const collectMessages = async (cwd: string): Promise<readonly SDKMessage[]> => {
   const controller = new AbortController();
   setTimeout(() => controller.abort(), 120_000);
   const messages: SDKMessage[] = [];
+
+  // Gate the prompt behind MCP readiness so the model doesn't respond before
+  // the bootstrap channel notification has a chance to arrive.
+  let releasePrompt: () => void;
+  const promptGate = new Promise<void>((resolve) => {
+    releasePrompt = resolve;
+  });
+  let sessionId = "";
+  let sessionIdResolve: () => void;
+  const sessionIdReady = new Promise<void>((resolve) => {
+    sessionIdResolve = resolve;
+  });
+
+  async function* promptStream(): AsyncGenerator<SDKUserMessage> {
+    await promptGate;
+    yield {
+      type: "user",
+      message: { role: "user", content: prompt },
+      parent_tool_use_id: null,
+      session_id: sessionId,
+    };
+  }
+
   const q = query({
-    prompt,
+    prompt: promptStream(),
     options: {
       cwd,
       maxTurns,
@@ -83,8 +106,29 @@ const collectMessages = async (cwd: string): Promise<readonly SDKMessage[]> => {
       env: { ...process.env, CLAUDE_CODE_DISABLE_AUTO_MEMORY: "1" },
     },
   });
+
+  // Wait for the markus MCP server to be connected before releasing the prompt.
+  const waitForMcp = async (): Promise<void> => {
+    const MAX_WAIT_MS = 10_000;
+    const POLL_MS = 100;
+    const start = Date.now();
+    while (Date.now() - start < MAX_WAIT_MS) {
+      const statuses = await q.mcpServerStatus();
+      const markus = statuses.find((s) => s.name === "markus");
+      if (markus?.status === "connected") return;
+      await new Promise<void>((r) => setTimeout(r, POLL_MS));
+    }
+    // Timed out — release anyway so the harness doesn't hang.
+  };
+
+  Promise.all([waitForMcp(), sessionIdReady]).then(() => releasePrompt!());
+
   for await (const msg of q) {
     messages.push(msg);
+    if (msg.type === "system" && msg.subtype === "init") {
+      sessionId = msg.session_id;
+      sessionIdResolve!();
+    }
     if (msg.type === "result") {
       q.close();
       break;
