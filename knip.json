@@ -3,7 +3,6 @@
   "ignoreExportsUsedInFile": true,
   "entry": [
     "src/server.ts",
-    "src/system-instructions.ts",
     "src/workspace-context.ts",
     "src/bootstrap-nudge.ts"
   ],
