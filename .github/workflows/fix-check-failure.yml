@@ -6,7 +6,7 @@ on:
 
 jobs:
   fix:
-    if: github.event.check_suite.conclusion == 'failure' && github.event.sender.login == github.repository_owner
+    if: github.event.check_suite.conclusion == 'failure' && (github.event.sender.login == github.repository_owner || github.event.sender.login == 'claude[bot]')
     runs-on: ubuntu-latest
     permissions:
       contents: write
