@@ -31,9 +31,11 @@ RUN chmod +x /usr/local/bin/init-firewall.sh && \
 RUN mkdir -p /home/node/.claude && chown -R node:node /home/node/.claude
 ENV CLAUDE_CONFIG_DIR=/home/node/.claude
 
+COPY package.json bun.lock /plugin/
+RUN cd /plugin && bun install --frozen-lockfile
+
 WORKDIR /workspace
-COPY . /plugin
-RUN cd /plugin && bun install --frozen-lockfile && chown -R node:node /plugin /workspace /usr/local/share/bun
+RUN chown -R node:node /plugin /workspace /usr/local/share/bun
 
 USER node
 RUN mkdir -p /tmp/qmd-warmup && \
@@ -48,4 +50,4 @@ RUN mkdir -p /tmp/qmd-warmup && \
 VOLUME /home/node/.claude
 VOLUME /workspace
 
-ENTRYPOINT ["sh", "-c", "sudo init-firewall.sh && exec claude --dangerously-skip-permissions --agent personal-assistant --plugin-dir /plugin --dangerously-load-development-channels plugin:markus@inline"]
+ENTRYPOINT ["bash"]
