@@ -1,6 +1,6 @@
 ## Pre-condition
 
-All interactive tests must launch Claude with `--agent markus`.
+All interactive tests must launch Claude with `--agent personal-assistant`.
 
 ## Bootstrap
 
