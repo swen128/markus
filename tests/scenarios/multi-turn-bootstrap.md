@@ -6,10 +6,10 @@ Full onboarding flow: bootstrap then personalize.
 ## Steps
 
 ```bash
-SESSION=$(bun run tests/harness.ts --fixture empty "Hello")
-# Wait for bootstrap to complete, then continue:
-bun run tests/harness.ts --resume "$SESSION" "My name is Alice and I live in Tokyo. My timezone is Asia/Tokyo. Call me Al."
-bun run tests/harness.ts --resume "$SESSION" "From now on, be concise and use bullet points."
+bun run tests/harness.ts --fixture empty "Hello"
+# Read the session= line from the output, then continue:
+bun run tests/harness.ts --resume <session-id> "My name is Alice and I live in Tokyo. My timezone is Asia/Tokyo. Call me Al."
+bun run tests/harness.ts --resume <session-id> "From now on, be concise and use bullet points."
 ```
 
 ## Pass
