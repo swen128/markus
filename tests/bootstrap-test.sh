@@ -12,7 +12,7 @@ tmp="$(mktemp)"
 jq --arg path "$WORKSPACE" '.projects[$path] = {"hasTrustDialogAccepted": true, "hasTrustDialogHooksAccepted": true}' "$CLAUDE_JSON" > "$tmp" && mv "$tmp" "$CLAUDE_JSON"
 
 tmux new-session -d -s "$SESSION" -x 200 -y 50 \
-  "cd '$WORKSPACE' && IS_DEMO=1 claude \
+  "cd '$WORKSPACE' && claude \
     --agent personal-assistant \
     --dangerously-skip-permissions \
     --plugin-dir '$PLUGIN_DIR' \
