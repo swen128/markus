@@ -30,6 +30,7 @@ jobs:
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           claude_args: "--agent implementer --dangerously-skip-permissions"
+          allowed_bots: 'claude'
           prompt: |
             The CI check failed.
             Branch: ${{ github.event.workflow_run.head_branch }}
