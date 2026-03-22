@@ -75,6 +75,7 @@ const collectMessages = async (cwd: string): Promise<readonly SDKMessage[]> => {
     options: {
       cwd,
       maxTurns,
+      agent: "personal-assistant",
       plugins: [pluginConfig],
       permissionMode: "bypassPermissions",
       allowDangerouslySkipPermissions: true,
