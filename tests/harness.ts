@@ -75,11 +75,14 @@ const collectMessages = async (cwd: string): Promise<readonly SDKMessage[]> => {
     options: {
       cwd,
       maxTurns,
-      agent: "personal-assistant",
+      agent: "markus:personal-assistant",
       plugins: [pluginConfig],
       permissionMode: "bypassPermissions",
       allowDangerouslySkipPermissions: true,
       abortController: controller,
+      // The personal-assistant agent defines these in its frontmatter, but Claude Code
+      // ignores agent frontmatter disallowedTools when invoked via SDK / -p flag.
+      disallowedTools: ["CronCreate", "CronDelete", "CronList", "EnterPlanMode", "ExitPlanMode"],
       ...(values.resume ? { resume: values.resume } : {}),
       env: { ...process.env, CLAUDE_CODE_DISABLE_AUTO_MEMORY: "1" },
     },

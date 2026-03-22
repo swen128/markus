@@ -13,7 +13,7 @@ jq --arg path "$WORKSPACE" '.projects[$path] = {"hasTrustDialogAccepted": true, 
 
 tmux new-session -d -s "$SESSION" -x 200 -y 50 \
   "cd '$WORKSPACE' && claude \
-    --agent personal-assistant \
+    --agent markus:personal-assistant \
     --dangerously-skip-permissions \
     --plugin-dir '$PLUGIN_DIR' \
     --dangerously-load-development-channels plugin:markus@inline \
