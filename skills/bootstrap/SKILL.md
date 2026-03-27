@@ -1,6 +1,6 @@
 ---
 user-invocable: false
-description: First-run onboarding. Use when SOUL.md does not exist in the workspace, indicating no prior markus setup. The SessionStart hook will nudge you to run this.
+description: First-run onboarding. Use when SOUL.md does not exist in the workspace, indicating no prior markus setup.
 ---
 
 1. Check if `SOUL.md` exists in the project root. If it exists, stop.

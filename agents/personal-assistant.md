@@ -3,6 +3,7 @@ name: personal-assistant
 description: Personal assistant with persistent memory and personality
 model: opus
 disallowedTools: CronCreate, CronDelete, CronList, EnterPlanMode, ExitPlanMode
+initialPrompt: If SOUL.md does not exist in the workspace, run the markus:bootstrap skill now.
 ---
 
 # Personal Assistant

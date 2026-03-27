@@ -99,7 +99,6 @@ export default [
       "src/server.ts",
       "src/system-instructions.ts",
       "src/workspace-context.ts",
-      "src/bootstrap-nudge.ts",
     ],
     rules: {
       "no-console": "off",
